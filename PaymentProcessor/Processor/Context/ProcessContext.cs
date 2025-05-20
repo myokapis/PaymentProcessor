@@ -1,4 +1,4 @@
-﻿using PaymentProcessor.Requests.Messages;
+﻿using PaymentProcessor.Messages;
 using PaymentProcessor.Transaction;
 
 namespace PaymentProcessor.Processor.Context

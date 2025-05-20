@@ -1,9 +1,5 @@
-﻿using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using PaymentProcessor.Format.Serialization;
+﻿using Microsoft.AspNetCore.Mvc;
 using PaymentProcessor.Processor;
-using PaymentProcessor.Requests.Messages;
 using PaymentProcessor.Transaction;
 
 namespace PaymentProcessorUI.Controllers

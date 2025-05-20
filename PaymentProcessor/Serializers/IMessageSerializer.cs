@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using PaymentProcessor.Requests.Messages;
+using PaymentProcessor.Messages;
 
 namespace PaymentProcessor.Serializers
 {

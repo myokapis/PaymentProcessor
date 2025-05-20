@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using PaymentProcessor.Format.Attributes;
 using PaymentProcessor.Format.Serialization;
-using PaymentProcessor.Requests.Messages;
+using PaymentProcessor.Messages;
 
 namespace PaymentProcessor.Serializers
 {

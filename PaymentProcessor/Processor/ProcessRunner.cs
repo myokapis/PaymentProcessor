@@ -1,8 +1,6 @@
 ﻿using PaymentProcessor.Factories.Delegates;
 using PaymentProcessor.Processor.Context;
 using PaymentProcessor.Processor.ProcessStep;
-using PaymentProcessor.Processor.Transaction;
-using PaymentProcessor.Requests.Mappers;
 using PaymentProcessor.Transaction;
 
 namespace PaymentProcessor.Processor
@@ -22,15 +20,26 @@ namespace PaymentProcessor.Processor
 
         public IProcessContext ProcessContext { get; init; }
 
+        public void Run(Body transaction)
+        {
+            isSuccessful = true;
+            ProcessContext.Transaction = transaction;
+            Steps();
+        }
+
         public async Task RunAsync(Body transaction)
         {
             isSuccessful = true;
             ProcessContext.Transaction = transaction;
+            await StepsAsync();
+        }
 
-            // TODO: add steps here
-            // example:
-            RunStep<BuildMessageStep>();
-            RunStep<SerializeMessageStep>();
+        protected virtual void Steps()
+        {
+        }
+
+        protected virtual async Task StepsAsync()
+        {
         }
 
         protected void HandleException(Exception exception)

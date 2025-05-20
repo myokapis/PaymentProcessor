@@ -1,13 +1,15 @@
+using System.Reflection;
 using System.Text.Json.Serialization;
 using PaymentProcessor.Extensions;
 using PaymentProcessor.Factories.Delegates;
+using PaymentProcessor.Mappers;
 using PaymentProcessor.Processor;
 using PaymentProcessor.Processor.Context;
 using PaymentProcessor.Processor.ProcessStep;
-using PaymentProcessor.Requests.Mappers;
 using PaymentProcessor.Serializers;
+using TsysProcessor.Processor;
 
-namespace PaymentProcessor
+namespace PaymentProcessorUI
 {
     public class Program
     {
@@ -50,11 +52,12 @@ namespace PaymentProcessor
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             services.AddOpenApi();
 
-            services.AddScoped<IProcessRunner, ProcessRunner>();
+            services.AddScoped<IProcessRunner, TransactionRunner>();
             //services.AddScoped<IProcessStepFactory, ProcessStepFactory>();
             services.AddScoped<IProcessContext, ProcessContext>();
             services.AddScoped<IMessageSerializer, StringSerializer>();
             //services.AddScoped<IMapperFactory, MapperFactory>();
+
             services.AddChildClasses(typeof(IMapper), typeof(IProcessStep));
 
             services.AddScoped<ProcessStepFactory>(serviceProvider =>

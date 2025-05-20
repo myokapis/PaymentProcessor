@@ -1,6 +1,6 @@
-﻿Test out the terminators and other formatters
-Reorganize project structure
+﻿
 Introduce transaction context
+Include transaction context in mapper constructor
 
 
 Finish schema
@@ -35,3 +35,5 @@ Build process steps
 - enqueue response
 - enqueue auto-void/timeout reversal jobs
 Add configuration
+Test out the terminators and other formatters
+Reorganize project structure
