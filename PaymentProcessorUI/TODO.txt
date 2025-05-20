@@ -1,0 +1,37 @@
+﻿Test out the terminators and other formatters
+Reorganize project structure
+Introduce transaction context
+
+
+Finish schema
+Build out a transaction
+Verify multi-level validation
+Verify multi-level parsing
+Build formatters
+ - data formatter: justify, padding char, length, format string
+ - serialization formatter: mask_value, terminator, suppress_null
+ - should these formatters be combined or attributes redistributed?
+
+Build out a request message
+Build string serializer
+ - may need to create a reflector for formatters
+ - need to create an attribute accessor reflector for messages
+ - how to tell if a message has values or if it is empty
+ - how to deal with nullable types and nested message classes and other classes
+Build out the mappers
+ - need to figure out how to inject the correct utilities
+ - build out group mapper
+Build out helpers
+Build process steps
+- acquire envelope
+- decrypt data
+- get batch info
+- build request
+- save request to log
+- send request
+- parse response
+- update log
+- build response
+- enqueue response
+- enqueue auto-void/timeout reversal jobs
+Add configuration
