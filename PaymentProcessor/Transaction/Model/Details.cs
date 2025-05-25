@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace PaymentProcessor.Transaction
+namespace PaymentProcessor.Transaction.Model
 {
     public class Details
     {
@@ -36,6 +36,7 @@ namespace PaymentProcessor.Transaction
         public object? TaxStatus { get; init; }
         public Dictionary<string, object>? TestPayload { get; init; }
         public int? TipAmount { get; set; }
+
         // TODO: structure this as an object or array of objects
         public object? TransactionLevelData { get; init; }
         public int TotalAmount { get; init; }

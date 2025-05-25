@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace PaymentProcessor.Transaction
+namespace PaymentProcessor.Transaction.Model
 {
     public class Reader
     {

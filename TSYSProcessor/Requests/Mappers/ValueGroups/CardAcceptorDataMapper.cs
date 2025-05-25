@@ -1,13 +1,14 @@
 ﻿using PaymentProcessor.Mappers;
 using PaymentProcessor.Messages;
 using TsysProcessor.Requests.Messages.ValueGroups;
-using PaymentProcessor.Transaction;
+using PaymentProcessor.Transaction.Model;
+using TsysProcessor.Transaction.Context;
 
 namespace TsysProcessor.Requests.Mappers.ValueGroups
 {
-    public class CardAcceptorDataMapper : Mapper<CardAcceptorData>
+    public class CardAcceptorDataMapper : Mapper<TsysTransactionContext, CardAcceptorData>
     {
-        public override IAccessibleMessage Map(Body transaction)
+        public override IAccessibleMessage Map(TsysTransactionContext transactionContext)
         {
             return new CardAcceptorData()
             {

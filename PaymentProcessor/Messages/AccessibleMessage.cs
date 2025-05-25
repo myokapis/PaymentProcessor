@@ -10,16 +10,6 @@ namespace PaymentProcessor.Messages
         public AccessibleMessage()
         { }
 
-        //public AccessibleMessage(Dictionary<string, object> fieldValues)
-        //{
-        //    foreach (var fieldDefinition in fieldDefinitions.Value)
-        //    {
-        //        var property = fieldDefinition.PropertyInfo;
-        //        var value = fieldValues[property.Name];
-        //        property.SetValue(this, value);
-        //    }
-        //}
-
         #region Static Variables
 
         private static Lazy<FieldDefinition[]> fieldDefinitions =

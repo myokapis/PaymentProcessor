@@ -1,37 +1,43 @@
 ﻿using PaymentProcessor.Factories.Delegates;
 using PaymentProcessor.Processor.Context;
 using PaymentProcessor.Processor.ProcessStep;
-using PaymentProcessor.Transaction;
+using PaymentProcessor.Transaction.Model;
 
 namespace PaymentProcessor.Processor
 {
-    public class ProcessRunner : IProcessRunner
+    public class ProcessRunner<TContext> : IProcessRunner, IProcessRunner<TContext>
+        where TContext : IProcessContext
     {
         
         private readonly ProcessStepFactory processStepFactory;
-        private bool isSuccessful;
 
-        public ProcessRunner(ProcessStepFactory processStepFactory, IProcessContext processContext)
+        public ProcessRunner(ProcessStepFactory processStepFactory, TContext processContext)
         {
             
             this.processStepFactory = processStepFactory;
             ProcessContext = processContext;
         }
 
-        public IProcessContext ProcessContext { get; init; }
+        public TContext ProcessContext { get; init; }
 
-        public void Run(Body transaction)
-        {
-            isSuccessful = true;
-            ProcessContext.Transaction = transaction;
-            Steps();
+        IProcessContext IProcessRunner.ProcessContext
+        { 
+            get => ProcessContext; 
+            init => ProcessContext = (TContext)value; 
         }
 
-        public async Task RunAsync(Body transaction)
+        public bool Run(ITransactionModel transaction)
         {
-            isSuccessful = true;
+            ProcessContext.Transaction = transaction;
+            Steps();
+            return ProcessContext.ProcessState;
+        }
+
+        public async Task<bool> RunAsync(ITransactionModel transaction)
+        {
             ProcessContext.Transaction = transaction;
             await StepsAsync();
+            return ProcessContext.ProcessState;
         }
 
         protected virtual void Steps()
@@ -44,7 +50,7 @@ namespace PaymentProcessor.Processor
 
         protected void HandleException(Exception exception)
         {
-            isSuccessful = false;
+            ProcessContext.ProcessState = false;
             // TODO: sanitize and log exception
         }
 
@@ -52,9 +58,8 @@ namespace PaymentProcessor.Processor
         {
             try
             {
-                //var step = processStepFactory.GetProcessStep<T>();
                 var step = processStepFactory(typeof(T));
-                isSuccessful = isSuccessful && step.Run();
+                ProcessContext.ProcessState = step.Run();
             }
             catch(Exception e)
             {
@@ -66,10 +71,9 @@ namespace PaymentProcessor.Processor
         {
             try
             {
-                //var step = processStepFactory.GetProcessStep<T>();
                 var step = processStepFactory(typeof(T));
                 var result = await step.RunAsync();
-                isSuccessful = isSuccessful && result;
+                ProcessContext.ProcessState = result;
             }
             catch (Exception e)
             {

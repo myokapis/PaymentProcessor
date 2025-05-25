@@ -3,20 +3,20 @@ using PaymentProcessor.Serializers;
 using TsysProcessor.Requests.Mappers.ValueGroups;
 using TsysProcessor.Requests.Messages;
 using TsysProcessor.Requests.Messages.Groups;
-using PaymentProcessor.Transaction;
 using System.Text;
 using TsysProcessor.Requests.Mappers.Groups;
 using PaymentProcessor.Mappers;
 using PaymentProcessor.Messages;
+using TsysProcessor.Transaction.Context;
 
 namespace TsysProcessor.Requests.Mappers
 {
-    public class SaleMapper : ParentMapper<SaleMessage>
+    public class SaleMapper : ParentMapper<TsysTransactionContext, SaleMessage>
     {
         public SaleMapper(MapperFactory mapperFactory, IMessageSerializer messageSerializer) : base(mapperFactory, messageSerializer)
         {}
 
-        public override IAccessibleMessage Map(Body transaction)
+        public override IAccessibleMessage Map(TsysTransactionContext transactionContext)
         {
             var builder = new StringBuilder();
 
@@ -24,22 +24,22 @@ namespace TsysProcessor.Requests.Mappers
             {
                 AccountDataSource = "XXX",
                 AcquirerBin = 0,
-                CardAcceptorData = MapValueGroup<CardAcceptorDataMapper>(transaction, builder),
+                CardAcceptorData = MapValueGroup<CardAcceptorDataMapper>(transactionContext, builder),
                 CardholderIdentificationData = "XXX",
-                CityCode = "86753",
+                CityCode = transactionContext.ProcessorAttributes.CityCode,
                 CustomerDataField = "XXX",
-                IndustryCode = IndustryCode(transaction),
+                IndustryCode = IndustryCode(transactionContext),
                 MarketSpecificDataIndicator = "XXX",
                 ReversalCancelDataI = "XXX",
                 ReversalIncrementalTransactionId = "XXX",
                 TransactionCode = "XXX",
-                Group3 = (Group3)MapGroup<Group3Mapper>(transaction)
+                Group3 = (Group3)MapGroup<Group3Mapper>(transactionContext)
             };
         }
 
-        private string IndustryCode(Body transaction)
+        private string IndustryCode(TsysTransactionContext transactionContext)
         {
-            return transaction.Merchant.Industry switch
+            return transactionContext.Merchant.Industry switch
             {
                 "RETAIL" => "R",
                 "MOTO" => "D",

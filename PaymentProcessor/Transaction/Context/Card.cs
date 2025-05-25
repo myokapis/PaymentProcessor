@@ -1,7 +1,10 @@
-﻿namespace PaymentProcessor.Transaction
+﻿namespace PaymentProcessor.Transaction.Context
 {
     public class Card
     {
+        public Card()
+        { }
+
         public string? Address { get; init; }
         public string? CardType { get; init; }
         public string? CVV { get; init; }

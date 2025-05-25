@@ -1,12 +1,14 @@
 ﻿using PaymentProcessor.Factories.Delegates;
 using PaymentProcessor.Messages;
 using PaymentProcessor.Serializers;
-using PaymentProcessor.Transaction;
+using PaymentProcessor.Transaction.Context;
 using System.Text;
 
 namespace PaymentProcessor.Mappers
 {
-    public class ParentMapper<TMessage> : Mapper<TMessage> where TMessage : IAccessibleMessage
+    public class ParentMapper<TContext, TMessage> : Mapper<TContext, TMessage>
+        where TContext : ITransactionContext
+        where TMessage : IAccessibleMessage
     {
         protected MapperFactory mapperFactory;
         protected IMessageSerializer messageSerializer;
@@ -17,15 +19,15 @@ namespace PaymentProcessor.Mappers
             this.messageSerializer = messageSerializer;
         }
 
-        protected virtual IAccessibleMessage MapGroup<TChildMapper>(Body transaction) where TChildMapper : IMapper
+        protected virtual IAccessibleMessage MapGroup<TChildMapper>(TContext transactionContext) where TChildMapper : IMapper<TContext>
         {
             var mapper = mapperFactory(typeof(TChildMapper));
-            return mapper.Map(transaction);
+            return mapper.Map(transactionContext);
         }
 
-        protected string MapValueGroup<TChildMapper>(Body transaction, StringBuilder builder) where TChildMapper : IMapper
+        protected string MapValueGroup<TChildMapper>(TContext transactionContext, StringBuilder builder) where TChildMapper : IMapper<TContext>
         {
-            var message = MapGroup<TChildMapper>(transaction);
+            var message = MapGroup<TChildMapper>(transactionContext);
             builder.Clear();
             messageSerializer.SerializeMessage(message, builder);
             return builder.ToString();

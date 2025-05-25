@@ -1,14 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PaymentProcessor.Processor;
-using PaymentProcessor.Transaction;
+using TsysProcessor.Processor;
+using TsysProcessor.Transaction.Model;
 
 namespace PaymentProcessorUI.Controllers
 {
     public class CardPaymentController : Controller
     {
-        private readonly IProcessRunner processRunner;
+        private readonly TsysTransactionRunner processRunner;
 
-        public CardPaymentController(IProcessRunner processRunner)
+        public CardPaymentController(TsysTransactionRunner processRunner)
         {
             this.processRunner = processRunner;
         }
@@ -20,7 +21,7 @@ namespace PaymentProcessorUI.Controllers
         }
 
         [HttpPost("/cardpayment/payment/")]
-        public async Task<IActionResult> Payment([FromBody] Body transaction)
+        public async Task<IActionResult> Payment([FromBody] TsysTransaction transaction)
         {
             if (!ModelState.IsValid)
             {

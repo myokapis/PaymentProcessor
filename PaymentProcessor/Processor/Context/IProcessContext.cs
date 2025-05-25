@@ -1,15 +1,24 @@
 ﻿using PaymentProcessor.Messages;
-using PaymentProcessor.Transaction;
+using PaymentProcessor.Transaction.Model;
+using PaymentProcessor.Transaction.Context;
 
 namespace PaymentProcessor.Processor.Context
 {
+    public interface IProcessContext<TModel, TContext> : IProcessContext
+        where TModel : ITransactionModel
+        where TContext : ITransactionContext
+    {
+        new TModel? Transaction { get; set; }
+        new TContext? TransactionContext { get; set; }
+    }
+
     public interface IProcessContext
     {
-        Card? Card { get; set; }
-        Envelope? Envelope { get; set; }
         string? ProcessorResponse { get; set; }
         IAccessibleMessage? RequestMessage { get; set; }
         string? SerializedRequest { get; set; }
-        Body? Transaction { get; set; }
+        bool ProcessState { get; set; }
+        ITransactionModel? Transaction { get; set; }
+        ITransactionContext? TransactionContext { get; set; }
     }
 }

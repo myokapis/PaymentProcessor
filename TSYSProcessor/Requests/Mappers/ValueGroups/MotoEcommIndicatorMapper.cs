@@ -1,13 +1,14 @@
 ﻿using TsysProcessor.Requests.Messages.ValueGroups;
-using PaymentProcessor.Transaction;
 using PaymentProcessor.Mappers;
 using PaymentProcessor.Messages;
+using PaymentProcessor.Transaction.Model;
+using TsysProcessor.Transaction.Context;
 
 namespace TsysProcessor.Requests.Mappers.ValueGroups
 {
-    public class MotoEcommIndicatorMapper : Mapper<MotoEcommIndicator>
+    public class MotoEcommIndicatorMapper : Mapper<TsysTransactionContext, MotoEcommIndicator>
     {
-        public override IAccessibleMessage Map(Body transaction)
+        public override IAccessibleMessage Map(TsysTransactionContext transactionContext)
         {
             return new MotoEcommIndicator();
         }

@@ -68,8 +68,6 @@ namespace PaymentProcessor.Serializers
 
         protected string FormatField(FieldContent fieldContent, bool isMasked)
         {
-            //var value = fieldContent.Value;
-            //var formatter = fieldContent.FormatAttribute;
             var formattedValue = FormattedFieldValue(fieldContent);
             var workingValue = isMasked ? MaskValue(formattedValue, fieldContent) : formattedValue;
             return JustifyValue(workingValue, fieldContent);
