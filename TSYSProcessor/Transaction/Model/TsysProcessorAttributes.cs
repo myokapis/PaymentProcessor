@@ -1,9 +1,9 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
+using PaymentProcessor.Transaction.Model;
 
-namespace PaymentProcessor.Transaction
+namespace TsysProcessor.Transaction.Model
 {
-    public class ProcessorAttributes
+    public class TsysProcessorAttributes : IProcessorAttributes
     {
         [JsonPropertyName("tsysd_bin")]
         public int AcquirerBin { get; set; }

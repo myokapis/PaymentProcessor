@@ -1,22 +1,25 @@
-﻿using System.Text;
-using PaymentProcessor.Factories.Delegates;
-using PaymentProcessor.Serializers;
-using PaymentProcessor.Transaction;
-using PaymentProcessor.Messages;
+﻿using PaymentProcessor.Messages;
+using PaymentProcessor.Transaction.Context;
 
 namespace PaymentProcessor.Mappers
 {
-    public abstract class Mapper<TMessage> : IMapper where TMessage : IAccessibleMessage // , new()
+    public abstract class Mapper<TContext, TMessage> : IMapper, IMapper<TContext>
+        where TContext : ITransactionContext
+        where TMessage : IAccessibleMessage
     {
         public Mapper()
         { }
 
-        public virtual IAccessibleMessage Map(Body transaction)
+        public virtual IAccessibleMessage Map(TContext transaction)
         {
             throw new NotImplementedException();
         }
 
-        // TODO: decide if we need this. If not, then kill this abstract class
+        IAccessibleMessage IMapper.Map(ITransactionContext transactionContext)
+        {
+            return Map((TContext)transactionContext);
+        }
+
         public virtual IAccessibleMessage SetFields(IAccessibleMessage message, Dictionary<string, object> fieldValues)
         {
             foreach (var fieldDefinition in message.FieldDefinitions)
@@ -28,24 +31,5 @@ namespace PaymentProcessor.Mappers
 
             return message;
         }
-
-        //protected virtual IAccessibleMessage SetFieldValues(Body transaction)
-        //{
-        //    return new TMessage();
-        //}
-
-        //protected virtual IAccessibleMessage SetFieldValues(Body transaction, Dictionary<string, object> fieldValues)
-        //{
-        //    var message = new TMessage();
-
-        //    foreach (var fieldDefinition in message.FieldDefinitions)
-        //    {
-        //        var property = fieldDefinition.PropertyInfo;
-        //        var value = fieldValues[property.Name];
-        //        property.SetValue(message, value);
-        //    }
-
-        //    return message;
-        //}
     }
 }

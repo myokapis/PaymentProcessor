@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace PaymentProcessor.Transaction
+namespace PaymentProcessor.Transaction.Model
 {
     // TODO: see which of these properties are actually needed and remove the others
     public class Merchant

@@ -1,48 +1,49 @@
 ﻿using TsysProcessor.Requests.Mappers.ValueGroups;
 using System.Text;
 using TsysProcessor.Requests.Messages.Groups;
-using PaymentProcessor.Transaction;
 using PaymentProcessor.Factories.Delegates;
 using PaymentProcessor.Serializers;
 using PaymentProcessor.Mappers;
 using PaymentProcessor.Messages;
+using PaymentProcessor.Transaction.Model;
+using TsysProcessor.Transaction.Context;
 
 namespace TsysProcessor.Requests.Mappers.Groups
 {
-    public class Group3Mapper : ParentMapper<Group3>
+    public class Group3Mapper : ParentMapper<TsysTransactionContext, Group3>
     {
         public Group3Mapper(MapperFactory mapperFactory, IMessageSerializer messageSerializer) : base(mapperFactory, messageSerializer)
         { }
 
-        public override IAccessibleMessage Map(Body transaction)
+        public override IAccessibleMessage Map(TsysTransactionContext transactionContext)
         {
             var builder = new StringBuilder();
 
             return new Group3()
             {
-                AdditionalAcceptorData = MapValueGroup<AdditionalAcceptorDataMapper>(transaction, builder),
-                AdditionalAmounts = MapValueGroup<AdditionalAmountsMapper>(transaction, builder),
-                CardProductCode = MapValueGroup<CardProductCodeMapper>(transaction, builder),
-                ChipConditionCode = MapValueGroup<ChipConditionCodeMapper>(transaction, builder),
-                CitMitIndicator = MapValueGroup<CitMitIndicatorMapper>(transaction, builder),
-                CommercialCardRequestIndicator = MapValueGroup<CommercialCardRequestIndicatorMapper>(transaction, builder),
-                DeveloperInformation = MapValueGroup<DeveloperInformationMapper>(transaction, builder),
-                ExtendedPosData = MapValueGroup<ExtendedPosDataMapper>(transaction, builder),
-                FraudEnhancedData = MapValueGroup<FraudEnhancedDataMapper>(transaction, builder),
+                AdditionalAcceptorData = MapValueGroup<AdditionalAcceptorDataMapper>(transactionContext, builder),
+                AdditionalAmounts = MapValueGroup<AdditionalAmountsMapper>(transactionContext, builder),
+                CardProductCode = MapValueGroup<CardProductCodeMapper>(transactionContext, builder),
+                ChipConditionCode = MapValueGroup<ChipConditionCodeMapper>(transactionContext, builder),
+                CitMitIndicator = MapValueGroup<CitMitIndicatorMapper>(transactionContext, builder),
+                CommercialCardRequestIndicator = MapValueGroup<CommercialCardRequestIndicatorMapper>(transactionContext, builder),
+                DeveloperInformation = MapValueGroup<DeveloperInformationMapper>(transactionContext, builder),
+                ExtendedPosData = MapValueGroup<ExtendedPosDataMapper>(transactionContext, builder),
+                FraudEnhancedData = MapValueGroup<FraudEnhancedDataMapper>(transactionContext, builder),
                 IntegratedChipCard = "ICC Data",
-                AdditionalTransactionSpecificData = MapValueGroup<AdditionalTransactionSpecificDataMapper>(transaction, builder),
-                MasterCardPaymentIndicators = MapValueGroup<MasterCardPaymentIndicatorsMapper>(transaction, builder),
-                MCAuthenticationData = MapValueGroup<MCAuthenticationDataMapper>(transaction, builder),
-                MCAuthIndicator = MapValueGroup<MCAuthIndicatorMapper>(transaction, builder),
+                AdditionalTransactionSpecificData = MapValueGroup<AdditionalTransactionSpecificDataMapper>(transactionContext, builder),
+                MasterCardPaymentIndicators = MapValueGroup<MasterCardPaymentIndicatorsMapper>(transactionContext, builder),
+                MCAuthenticationData = MapValueGroup<MCAuthenticationDataMapper>(transactionContext, builder),
+                MCAuthIndicator = MapValueGroup<MCAuthIndicatorMapper>(transactionContext, builder),
                 MessageReasonCode = "REASON",
-                MotoEcommIndicator = MapValueGroup<MotoEcommIndicatorMapper>(transaction, builder),
-                PartialAuthIndicator = MapValueGroup<PartialAuthIndicatorMapper>(transaction, builder),
-                PosDataCode = MapValueGroup<PosDataCodeMapper>(transaction, builder),
-                PosEnvironmentIndicator = MapValueGroup<PosEnvironmentIndicatorMapper>(transaction, builder),
-                SpendQualifiedIndicator = MapValueGroup<SpendQualifiedIndicatorMapper>(transaction, builder),
+                MotoEcommIndicator = MapValueGroup<MotoEcommIndicatorMapper>(transactionContext, builder),
+                PartialAuthIndicator = MapValueGroup<PartialAuthIndicatorMapper>(transactionContext, builder),
+                PosDataCode = MapValueGroup<PosDataCodeMapper>(transactionContext, builder),
+                PosEnvironmentIndicator = MapValueGroup<PosEnvironmentIndicatorMapper>(transactionContext, builder),
+                SpendQualifiedIndicator = MapValueGroup<SpendQualifiedIndicatorMapper>(transactionContext, builder),
                 TerminalAuthentication = "TERM AUTH",
-                TransactionFeeAmount = MapValueGroup<TransactionFeeAmountMapper>(transaction, builder),
-                TransactionIntegrityClass = MapValueGroup<TransactionIntegrityClassMapper>(transaction, builder)
+                TransactionFeeAmount = MapValueGroup<TransactionFeeAmountMapper>(transactionContext, builder),
+                TransactionIntegrityClass = MapValueGroup<TransactionIntegrityClassMapper>(transactionContext, builder)
             };
         }
     }

@@ -1,13 +1,14 @@
 ﻿using TsysProcessor.Requests.Messages.ValueGroups;
-using PaymentProcessor.Transaction;
 using PaymentProcessor.Mappers;
 using PaymentProcessor.Messages;
+using PaymentProcessor.Transaction.Model;
+using TsysProcessor.Transaction.Context;
 
 namespace TsysProcessor.Requests.Mappers.ValueGroups
 {
-    public class PosDataCodeMapper : Mapper<PosDataCode>
+    public class PosDataCodeMapper : Mapper<TsysTransactionContext, PosDataCode>
     {
-        public override IAccessibleMessage Map(Body transaction)
+        public override IAccessibleMessage Map(TsysTransactionContext transactionContext)
         {
             return new PosDataCode()
             {

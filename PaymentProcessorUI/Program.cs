@@ -8,6 +8,7 @@ using PaymentProcessor.Processor.Context;
 using PaymentProcessor.Processor.ProcessStep;
 using PaymentProcessor.Serializers;
 using TsysProcessor.Processor;
+using TsysProcessor.Processor.Context;
 
 namespace PaymentProcessorUI
 {
@@ -52,9 +53,11 @@ namespace PaymentProcessorUI
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             services.AddOpenApi();
 
-            services.AddScoped<IProcessRunner, TransactionRunner>();
+            //services.AddScoped<IProcessRunner, TransactionRunner>();
+            services.AddScoped<TsysTransactionRunner>();
             //services.AddScoped<IProcessStepFactory, ProcessStepFactory>();
-            services.AddScoped<IProcessContext, ProcessContext>();
+            //services.AddScoped<IProcessContext, TsysProcessContext>();
+            services.AddScoped<TsysProcessContext>();
             services.AddScoped<IMessageSerializer, StringSerializer>();
             //services.AddScoped<IMapperFactory, MapperFactory>();
 
