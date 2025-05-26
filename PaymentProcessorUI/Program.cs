@@ -1,12 +1,11 @@
-using System.Reflection;
 using System.Text.Json.Serialization;
+using PaymentProcessor.Builders;
 using PaymentProcessor.Extensions;
 using PaymentProcessor.Factories.Delegates;
 using PaymentProcessor.Mappers;
-using PaymentProcessor.Processor;
-using PaymentProcessor.Processor.Context;
 using PaymentProcessor.Processor.ProcessStep;
 using PaymentProcessor.Serializers;
+using PaymentProcessor.Transaction.Context;
 using TsysProcessor.Processor;
 using TsysProcessor.Processor.Context;
 
@@ -53,13 +52,10 @@ namespace PaymentProcessorUI
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             services.AddOpenApi();
 
-            //services.AddScoped<IProcessRunner, TransactionRunner>();
             services.AddScoped<TsysTransactionRunner>();
-            //services.AddScoped<IProcessStepFactory, ProcessStepFactory>();
-            //services.AddScoped<IProcessContext, TsysProcessContext>();
             services.AddScoped<TsysProcessContext>();
             services.AddScoped<IMessageSerializer, StringSerializer>();
-            //services.AddScoped<IMapperFactory, MapperFactory>();
+            services.AddScoped<IBuilder<ActionContext>, ActionContextBuilder>();
 
             services.AddChildClasses(typeof(IMapper), typeof(IProcessStep));
 

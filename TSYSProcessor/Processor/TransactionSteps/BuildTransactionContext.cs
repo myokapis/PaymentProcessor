@@ -1,4 +1,4 @@
-﻿using PaymentProcessor.Processor.Context;
+﻿using PaymentProcessor.Builders;
 using PaymentProcessor.Processor.ProcessStep;
 using PaymentProcessor.Transaction.Context;
 using TsysProcessor.Processor.Context;
@@ -9,8 +9,11 @@ namespace TsysProcessor.Processor.TransactionSteps
 {
     class BuildTransactionContext : ProcessStep<TsysProcessContext>
     {
-        public BuildTransactionContext(TsysProcessContext processContext) : base(processContext)
+        private readonly IBuilder<ActionContext> actionContextBuilder;
+
+        public BuildTransactionContext(TsysProcessContext processContext, IBuilder<ActionContext> actionContextBuilder) : base(processContext)
         {
+            this.actionContextBuilder = actionContextBuilder;
         }
 
         protected override bool RunActive()
@@ -20,7 +23,8 @@ namespace TsysProcessor.Processor.TransactionSteps
             var transactionContext = new TsysTransactionContext()
             {
                 // TODO: finish defining the context and setting properties
-                ActionContext = BuildActionContext(),
+                ActionContext = actionContextBuilder.Build(transaction),
+                // TODO: call the card decryption utility
                 Card = BuildCard(transaction.Details.EncryptedCardData),
                 Details = transaction.Details,
                 Envelope = BuildEnvelope(),
@@ -35,14 +39,7 @@ namespace TsysProcessor.Processor.TransactionSteps
             return true;
         }
 
-        protected ActionContext BuildActionContext()
-        {
-            return new ActionContext()
-            { 
-                TransactionType = ""
-            };
-        }
-
+        // TODO: inject the builders and utilities instead of newing these up
         protected Card BuildCard(string EncryptedCardData)
         {
             return new Card()

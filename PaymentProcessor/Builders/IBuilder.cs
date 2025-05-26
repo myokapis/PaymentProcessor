@@ -1,9 +1,9 @@
-﻿using PaymentProcessor.Transaction;
+﻿using PaymentProcessor.Transaction.Model;
 
 namespace PaymentProcessor.Builders
 {
     public interface IBuilder<T>
     {
-        T Build();
+        T Build(ITransactionModel transaction);
     }
 }
