@@ -40,14 +40,6 @@ namespace TsysProcessor.Processor.TransactionSteps
         }
 
         // TODO: inject the builders and utilities instead of newing these up
-        protected ActionContext BuildActionContext()
-        {
-            return new ActionContext()
-            { 
-                TransactionType = ""
-            };
-        }
-
         protected Card BuildCard(string EncryptedCardData)
         {
             return new Card()
