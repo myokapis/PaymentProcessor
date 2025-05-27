@@ -19,8 +19,7 @@ namespace TsysProcessor.Processor
             RunStep<BuildTransactionContext>();
             RunStep<BuildMessage>();
             RunStep<SerializeMessage>();
-
-            // await RunStepAsync<SendMessage>();
+            await RunStepAsync<SendMessage>();
         }
     }
 }

@@ -3,7 +3,7 @@ using TsysProcessor.Transaction.Model;
 
 namespace TsysProcessor.Transaction.Context
 {
-    public class TsysTransactionContext : TransactionContext<Envelope, TsysProcessorAttributes>
+    public class TsysTransactionContext : TransactionContext<TsysEnvelope, TsysProcessorAttributes>
     {
     }
 }

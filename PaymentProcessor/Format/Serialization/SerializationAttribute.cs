@@ -1,7 +1,7 @@
 ﻿namespace PaymentProcessor.Format.Serialization
 {
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
-    public class SerializationAttribute : Attribute
+    public class SerializationAttribute : Attribute, ISerializationAttribute
     {
         public SerializationAttribute()
         {

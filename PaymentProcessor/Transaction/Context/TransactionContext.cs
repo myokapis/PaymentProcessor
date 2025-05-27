@@ -3,7 +3,7 @@
 namespace PaymentProcessor.Transaction.Context
 {
     public class TransactionContext<TEnvelope, TAttributes> : ITransactionContext, ITransactionContext<TEnvelope, TAttributes>
-        where TEnvelope : IEnvelope
+        where TEnvelope : IEnvelope<TEnvelope>
         where TAttributes : IProcessorAttributes
     {
         public required Card Card { get; set; }
@@ -14,6 +14,13 @@ namespace PaymentProcessor.Transaction.Context
         public required Reader Reader { get; set; }
         public required ActionContext ActionContext { get; set; }
         IEnvelope? ITransactionContext.Envelope { get => Envelope; set => Envelope = (TEnvelope?)value; }
+
+        IEnvelope<TEnvelope>? ITransactionContext<TEnvelope, TAttributes>.Envelope
+        { 
+            get => Envelope; 
+            set => Envelope = (TEnvelope?)value; 
+        }
+
         IProcessorAttributes ITransactionContext.ProcessorAttributes
         {
             get => ProcessorAttributes;

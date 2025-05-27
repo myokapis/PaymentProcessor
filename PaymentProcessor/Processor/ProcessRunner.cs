@@ -67,7 +67,7 @@ namespace PaymentProcessor.Processor
             }
         }
 
-        protected async Task RunStepAsync<T>() where T : IProcessStep, new()
+        protected async Task RunStepAsync<T>() where T : IProcessStep
         {
             try
             {

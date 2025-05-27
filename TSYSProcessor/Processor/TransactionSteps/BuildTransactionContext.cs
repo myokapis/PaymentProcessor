@@ -27,6 +27,7 @@ namespace TsysProcessor.Processor.TransactionSteps
                 // TODO: call the card decryption utility
                 Card = BuildCard(transaction.Details.EncryptedCardData),
                 Details = transaction.Details,
+                // TODO: call an envelope builder or utility
                 Envelope = BuildEnvelope(),
                 Merchant = transaction.Merchant,
                 ProcessorAttributes = transaction.ProcessorAttributes,
@@ -49,9 +50,9 @@ namespace TsysProcessor.Processor.TransactionSteps
             };
         }
 
-        protected Envelope BuildEnvelope()
+        protected TsysEnvelope BuildEnvelope()
         {
-            return new Envelope();
+            return new TsysEnvelope();
         }
     }
 }

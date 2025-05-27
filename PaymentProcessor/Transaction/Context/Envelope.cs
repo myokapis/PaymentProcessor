@@ -2,10 +2,7 @@
 
 namespace PaymentProcessor.Transaction.Context
 {
-    public interface IEnvelope<T> : IEnvelope, IAccessibleMessage<T>
-    { }
-
-    public interface IEnvelope
+    public class Envelope<T> : AccessibleMessage<T>, IEnvelope<T>
     {
         // TODO: add any envelope-specific behaviors
     }
