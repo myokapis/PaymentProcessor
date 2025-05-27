@@ -2,7 +2,7 @@
 
 namespace TsysProcessor.Transaction.Context
 {
-    public class Envelope : IEnvelope
+    public class TsysEnvelope : Envelope<TsysEnvelope>
     {
         // TODO: add custom envelope properties
     }

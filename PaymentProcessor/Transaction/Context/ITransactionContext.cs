@@ -3,10 +3,10 @@
 namespace PaymentProcessor.Transaction.Context
 {
     public interface ITransactionContext<TEnvelope, TAttributes> : ITransactionContext
-        where TEnvelope : IEnvelope
+        where TEnvelope : IEnvelope<TEnvelope>
         where TAttributes : IProcessorAttributes
     {
-        new TEnvelope? Envelope { get; set; }
+        new IEnvelope<TEnvelope>? Envelope { get; set; }
         new TAttributes ProcessorAttributes { get; set; }
     }
 

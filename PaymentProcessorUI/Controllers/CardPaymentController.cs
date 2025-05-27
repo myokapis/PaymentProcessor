@@ -14,7 +14,7 @@ namespace PaymentProcessorUI.Controllers
             this.processRunner = processRunner;
         }
 
-        //[HttpGet("CardPayment/Index")]
+        [HttpGet("CardPayment/Index")]
         public IActionResult Index()
         {
             return Ok();

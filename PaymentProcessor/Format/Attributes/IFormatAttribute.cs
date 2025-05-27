@@ -1,7 +1,13 @@
-﻿namespace PaymentProcessor.Format.Attributes
+﻿using PaymentProcessor.Enums;
+
+namespace PaymentProcessor.Format.Attributes
 {
-    // TODO: add methods and properties OR decide that an interface is unnecessary
     public interface IFormatAttribute
     {
+        string FormatString { get; init; }
+        Justify Justify { get; init; }
+        int MaxLength { get; set; }
+        int PaddedLength { get; set; }
+        char PaddingChar { get; init; }
     }
 }

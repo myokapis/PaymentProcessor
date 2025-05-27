@@ -21,21 +21,5 @@ namespace PaymentProcessor.Extensions
 
             return services;
         }
-
-        //public static IServiceCollection AddChildClasses(this IServiceCollection services, Type parentType, Action<Type, IServiceCollection> registrar)
-        //{
-        //    var assembly = Assembly.GetCallingAssembly();
-        //    if (assembly == null) return services;
-
-        //    var childClasses = assembly.GetTypes()
-        //        .Where(t => (t != parentType) && (parentType.IsAssignableFrom(t)) && t.IsClass);
-
-        //    foreach (var childClass in childClasses)
-        //    {
-        //        registrar(childClass, services);
-        //    }
-
-        //    return services;
-        //}
     }
 }

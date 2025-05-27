@@ -1,9 +1,9 @@
-﻿using PaymentProcessor.Format.Serialization;
-
-namespace PaymentProcessor.Messages
+﻿namespace PaymentProcessor.Messages
 {
-    public interface IAccessibleMessage: IMessage, IAccessible
+    public interface IAccessibleMessage
     {
+        int FieldCount { get; }
+        IEnumerable<FieldDefinition> FieldDefinitions { get; }
     }
 
     public interface IAccessibleMessage<T> : IAccessibleMessage

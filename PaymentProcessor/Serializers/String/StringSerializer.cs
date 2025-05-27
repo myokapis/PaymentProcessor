@@ -1,14 +1,16 @@
 ﻿using System.Text;
-using PaymentProcessor.Format.Attributes;
-using PaymentProcessor.Format.Serialization;
 using PaymentProcessor.Messages;
+using PaymentProcessor.Serializers.Formatters;
 
-namespace PaymentProcessor.Serializers
+namespace PaymentProcessor.Serializers.String
 {
     public class StringSerializer : IMessageSerializer
     {
-        public StringSerializer()
+        private readonly IFormatter formatter;
+
+        public StringSerializer(IFormatter formatter)
         {
+            this.formatter = formatter;
         }
 
         public void SerializeMessage(IAccessibleMessage? message, StringBuilder builder, bool isMasked = false)
@@ -32,9 +34,9 @@ namespace PaymentProcessor.Serializers
 
                 var terminator = fieldDefinition.SerializationAttribute?.Terminator;
                 var terminate = (fieldDefinition.SerializationAttribute?.AlwaysTerminate ?? false) || 
-                    (builder.Length > messageLength);
+                    builder.Length > messageLength;
 
-                if ((terminator != null) && terminate) builder.Append(terminator);
+                if (terminator != null && terminate) builder.Append(terminator);
             }
         }
 
@@ -54,8 +56,6 @@ namespace PaymentProcessor.Serializers
             };
         }
 
-
-        // TODO: move the formatters into another class
         protected string FormattedFieldValue(FieldContent fieldContent)
         {
             var value = fieldContent.Value;
@@ -63,7 +63,7 @@ namespace PaymentProcessor.Serializers
 
             if (fieldContent.FormatAttribute == null) return value.ToString() ?? "";
 
-            return FormatValue(value, fieldContent.FormatAttribute!);
+            return formatter.FormatValue(value, fieldContent.FormatAttribute!);
         }
 
         protected string FormatField(FieldContent fieldContent, bool isMasked)
@@ -71,41 +71,6 @@ namespace PaymentProcessor.Serializers
             var formattedValue = FormattedFieldValue(fieldContent);
             var workingValue = isMasked ? MaskValue(formattedValue, fieldContent) : formattedValue;
             return JustifyValue(workingValue, fieldContent);
-        }
-
-        protected string FormatValue(DateTime value, FormatAttribute formatter)
-        {
-            return value.ToString(formatter.FormatString);
-        }
-
-        protected string FormatValue(decimal value, FormatAttribute formatter)
-        {
-            return value.ToString(formatter.FormatString);
-        }
-
-        protected string FormatValue(int value, FormatAttribute formatter)
-        {
-            return value.ToString(formatter.FormatString);
-        }
-
-        protected string FormatValue(object value, FormatAttribute _formatter)
-        {
-            return value.ToString() ?? "";
-        }
-
-        protected string FormatValue(string value, FormatAttribute formatter)
-        {
-            return string.Format(formatter.FormatString, value);
-        }
-
-        protected string FormatValue(uint value, FormatAttribute formatter)
-        {
-            return value.ToString(formatter.FormatString);
-        }
-
-        protected string FormatValue(ulong value, FormatAttribute formatter)
-        {
-            return value.ToString(formatter.FormatString);
         }
 
         protected string MaskValue(string value, FieldContent fieldContent)
@@ -121,9 +86,9 @@ namespace PaymentProcessor.Serializers
             var formatter = fieldContent.FormatAttribute;
             if (formatter == null) return value;
 
-            if ((formatter.Justify == Enums.Justify.None) || (formatter.PaddedLength == 0))
+            if (formatter.Justify == Enums.Justify.None || formatter.PaddedLength == 0)
             {
-                if ((formatter.MaxLength == 0) ||(value.Length <= formatter.MaxLength)) return value;
+                if (formatter.MaxLength == 0 ||value.Length <= formatter.MaxLength) return value;
                 value.Substring(formatter.MaxLength);
             }
 
