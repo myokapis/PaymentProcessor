@@ -1,4 +1,4 @@
-﻿using PaymentProcessor.Transaction.Model;
+﻿using Payment.Processor.Transaction.Model;
 
 namespace TsysProcessor.Transaction.Model
 {

@@ -1,5 +1,5 @@
-﻿using PaymentProcessor.Mappers;
-using PaymentProcessor.Messages;
+﻿using Payment.Messages;
+using Payment.Messages.Mappers;
 using TsysProcessor.Requests.Messages.ValueGroups;
 using TsysProcessor.Transaction.Context;
 

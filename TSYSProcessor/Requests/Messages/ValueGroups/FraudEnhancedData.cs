@@ -1,4 +1,4 @@
-﻿using PaymentProcessor.Messages;
+﻿using Payment.Messages;
 
 namespace TsysProcessor.Requests.Messages.ValueGroups
 {

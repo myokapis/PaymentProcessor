@@ -1,4 +1,4 @@
-﻿using PaymentProcessor.Transaction.Context;
+﻿using Payment.Processor.Transaction.Context;
 
 namespace TsysProcessor.Transaction.Context
 {
