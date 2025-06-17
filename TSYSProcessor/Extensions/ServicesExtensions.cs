@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace PaymentProcessor.Extensions
+namespace TsysProcessor.Extensions
 {
     public static class ServicesExtensions
     {

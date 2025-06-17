@@ -1,24 +1,24 @@
-﻿using PaymentProcessor.Builders;
-using PaymentProcessor.Processor.ProcessStep;
-using PaymentProcessor.Transaction.Context;
-using TsysProcessor.Processor.Context;
+﻿using Payment.Processor.Builders;
+using Payment.Processor.Transaction.Context;
+using TsysProcessor.Workflow.Context;
 using TsysProcessor.Transaction.Context;
 using TsysProcessor.Transaction.Model;
+using TsysProcessor.Processor.TransactionTasks;
 
 namespace TsysProcessor.Processor.TransactionSteps
 {
-    class BuildTransactionContext : ProcessStep<TsysProcessContext>
+    class BuildTransactionContext : TsysTask
     {
         private readonly IBuilder<ActionContext> actionContextBuilder;
 
-        public BuildTransactionContext(TsysProcessContext processContext, IBuilder<ActionContext> actionContextBuilder) : base(processContext)
+        public BuildTransactionContext(TsysWorkflowContext workflowContext, IBuilder<ActionContext> actionContextBuilder) : base(workflowContext)
         {
             this.actionContextBuilder = actionContextBuilder;
         }
 
         protected override bool RunActive()
         {
-            if (ProcessContext?.Transaction is not TsysTransaction transaction) throw new ArgumentNullException("Transaction");
+            if (WorkflowContext.Transaction is not TsysTransaction transaction) throw new ArgumentNullException("Transaction");
 
             var transactionContext = new TsysTransactionContext()
             {
@@ -35,7 +35,7 @@ namespace TsysProcessor.Processor.TransactionSteps
                 Reader = transaction.Details.Reader
             };
 
-            ProcessContext.TransactionContext = transactionContext;
+            WorkflowContext.TransactionContext = transactionContext;
 
             return true;
         }

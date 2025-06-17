@@ -1,18 +1,17 @@
 ﻿using TsysProcessor.Requests.Mappers.ValueGroups;
 using System.Text;
 using TsysProcessor.Requests.Messages.Groups;
-using PaymentProcessor.Factories.Delegates;
-using PaymentProcessor.Serializers;
-using PaymentProcessor.Mappers;
-using PaymentProcessor.Messages;
-using PaymentProcessor.Transaction.Model;
 using TsysProcessor.Transaction.Context;
+using Payment.Messages.Mappers;
+using Payment.Messages;
+using Payment.Messages.Factories.Delegates;
+using Payment.Messages.Serializers;
 
 namespace TsysProcessor.Requests.Mappers.Groups
 {
     public class Group3Mapper : ParentMapper<TsysTransactionContext, Group3>
     {
-        public Group3Mapper(MapperFactory mapperFactory, IMessageSerializer messageSerializer) : base(mapperFactory, messageSerializer)
+        public Group3Mapper(MapperFactory<TsysTransactionContext> mapperFactory, IMessageSerializer messageSerializer) : base(mapperFactory, messageSerializer)
         { }
 
         public override IAccessibleMessage Map(TsysTransactionContext transactionContext)

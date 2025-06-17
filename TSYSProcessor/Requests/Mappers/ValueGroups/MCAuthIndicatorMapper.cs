@@ -1,8 +1,7 @@
 ﻿using TsysProcessor.Requests.Messages.ValueGroups;
-using PaymentProcessor.Mappers;
-using PaymentProcessor.Messages;
-using PaymentProcessor.Transaction.Model;
 using TsysProcessor.Transaction.Context;
+using Payment.Messages;
+using Payment.Messages.Mappers;
 
 namespace TsysProcessor.Requests.Mappers.ValueGroups
 {

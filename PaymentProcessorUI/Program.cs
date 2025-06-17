@@ -1,15 +1,16 @@
 using System.Text.Json.Serialization;
-using PaymentProcessor.Builders;
-using PaymentProcessor.Extensions;
-using PaymentProcessor.Factories.Delegates;
-using PaymentProcessor.Mappers;
-using PaymentProcessor.Processor.ProcessStep;
-using PaymentProcessor.Serializers;
-using PaymentProcessor.Serializers.Formatters;
-using PaymentProcessor.Serializers.String;
-using PaymentProcessor.Transaction.Context;
+using Payment.Messages.Factories.Delegates;
+using Payment.Messages.Mappers;
+using Payment.Messages.Serializers;
+using Payment.Messages.Serializers.Formatters;
+using Payment.Processor.Builders;
+using Payment.Processor.Transaction.Context;
+using Payment.Workflow.Factories.Delegates;
+using Payment.Workflow.Interfaces;
+using TsysProcessor.Extensions;
 using TsysProcessor.Processor;
-using TsysProcessor.Processor.Context;
+using TsysProcessor.Transaction.Context;
+using TsysProcessor.Workflow.Context;
 
 namespace PaymentProcessorUI
 {
@@ -56,20 +57,20 @@ namespace PaymentProcessorUI
             services.AddOpenApi();
 
             services.AddScoped<TsysTransactionRunner>();
-            services.AddScoped<TsysProcessContext>();
+            services.AddScoped<TsysWorkflowContext>();
             services.AddScoped<IMessageSerializer, StringSerializer>();
             services.AddScoped<IBuilder<ActionContext>, ActionContextBuilder>();
             services.AddScoped<IFormatter, Formatter>();
-            services.AddChildClasses(typeof(IMapper), typeof(IProcessStep));
+            services.AddChildClasses(typeof(IMapper), typeof(IWorkflowTask));
 
-            services.AddScoped<ProcessStepFactory>(serviceProvider =>
+            services.AddScoped<WorkflowTaskFactory>(serviceProvider =>
             {
-                return (type) => (IProcessStep)serviceProvider.GetRequiredService(type);
+                return (type) => (IWorkflowTask)serviceProvider.GetRequiredService(type);
             });
 
-            services.AddScoped<MapperFactory>(serviceProvider =>
+            services.AddScoped<MapperFactory<TsysTransactionContext>>(serviceProvider =>
             {
-                return (type) => (IMapper)serviceProvider.GetRequiredService(type);
+                return (type) => (IMapper<TsysTransactionContext>)serviceProvider.GetRequiredService(type);
             });
         }
     }

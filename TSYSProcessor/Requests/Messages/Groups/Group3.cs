@@ -1,5 +1,5 @@
-﻿using PaymentProcessor.Format.Serialization;
-using PaymentProcessor.Messages;
+﻿using Payment.Messages.Attributes.Serialization;
+using Payment.Messages;
 
 namespace TsysProcessor.Requests.Messages.Groups
 {

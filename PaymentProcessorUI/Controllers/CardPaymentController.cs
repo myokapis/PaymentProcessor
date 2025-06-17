@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PaymentProcessor.Processor;
 using TsysProcessor.Processor;
 using TsysProcessor.Transaction.Model;
 
@@ -7,11 +6,11 @@ namespace PaymentProcessorUI.Controllers
 {
     public class CardPaymentController : Controller
     {
-        private readonly TsysTransactionRunner processRunner;
+        private readonly TsysTransactionRunner workflowRunner;
 
-        public CardPaymentController(TsysTransactionRunner processRunner)
+        public CardPaymentController(TsysTransactionRunner workflowRunner)
         {
-            this.processRunner = processRunner;
+            this.workflowRunner = workflowRunner;
         }
 
         [HttpGet("CardPayment/Index")]
@@ -31,8 +30,8 @@ namespace PaymentProcessorUI.Controllers
                 return BadRequest("Transaction was improperly formatted.");
             }
 
-            await processRunner.RunAsync(transaction);
-            var request = processRunner.ProcessContext.SerializedRequest;
+            await workflowRunner.RunAsync(transaction);
+            var request = workflowRunner.WorkflowContext.SerializedRequest;
 
             return Ok(request);
         }

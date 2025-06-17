@@ -1,19 +1,19 @@
-﻿using PaymentProcessor.Factories.Delegates;
-using PaymentProcessor.Serializers;
-using TsysProcessor.Requests.Mappers.ValueGroups;
+﻿using TsysProcessor.Requests.Mappers.ValueGroups;
 using TsysProcessor.Requests.Messages;
 using TsysProcessor.Requests.Messages.Groups;
 using System.Text;
 using TsysProcessor.Requests.Mappers.Groups;
-using PaymentProcessor.Mappers;
-using PaymentProcessor.Messages;
 using TsysProcessor.Transaction.Context;
+using Payment.Messages.Factories.Delegates;
+using Payment.Messages.Serializers;
+using Payment.Messages;
+using Payment.Messages.Mappers;
 
 namespace TsysProcessor.Requests.Mappers
 {
     public class SaleMapper : ParentMapper<TsysTransactionContext, SaleMessage>
     {
-        public SaleMapper(MapperFactory mapperFactory, IMessageSerializer messageSerializer) : base(mapperFactory, messageSerializer)
+        public SaleMapper(MapperFactory<TsysTransactionContext> mapperFactory, IMessageSerializer messageSerializer) : base(mapperFactory, messageSerializer)
         {}
 
         public override IAccessibleMessage Map(TsysTransactionContext transactionContext)
