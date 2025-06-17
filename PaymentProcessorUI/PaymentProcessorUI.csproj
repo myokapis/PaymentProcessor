@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PaymentProcessor\PaymentProcessor.csproj" />
     <ProjectReference Include="..\TSYSProcessor\TsysProcessor.csproj" />
   </ItemGroup>
 
