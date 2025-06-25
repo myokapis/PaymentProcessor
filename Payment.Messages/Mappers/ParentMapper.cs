@@ -24,7 +24,7 @@ namespace Payment.Messages.Mappers
             return mapper.Map(messageContext);
         }
 
-        protected string MapValueGroup<TChildMapper>(TContext messageContext, StringBuilder builder) where TChildMapper : IMapper<TContext>
+        protected virtual string MapValueGroup<TChildMapper>(TContext messageContext, StringBuilder builder) where TChildMapper : IMapper<TContext>
         {
             var message = MapGroup<TChildMapper>(messageContext);
             builder.Clear();

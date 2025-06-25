@@ -16,6 +16,8 @@ namespace TsysProcessor.Requests.Messages.Groups
         public string AmexAdditionalData { get; set; } = "";
         public string ExtendedAvsData { get; set; } = "";
         public required string CardProductCode { get; set; }
+
+        [Serialization(Masked = true, MaskChar = '&')]
         public required string TerminalAuthentication { get; set; }
         public required string IntegratedChipCard { get; set; }
         public required string MessageReasonCode { get; set; }
@@ -29,7 +31,7 @@ namespace TsysProcessor.Requests.Messages.Groups
         public required string ExtendedPosData { get; set; }
         public required string CitMitIndicator { get; set; }
 
-        [Serialization(Terminator = Constants.GS)]
+        //[Serialization(Terminator = Constants.GS)]
         public required string AdditionalAcceptorData { get; set; }
         public required string AdditionalTransactionSpecificData { get; set; }
         public required string PosDataCode { get; set; }

@@ -2,6 +2,6 @@
 
 namespace Payment.Messages.Factories.Delegates
 {
-    public delegate IMapper<TContext> MapperFactory<TContext>(Type type);
+    public delegate IMapper<TContext>? MapperFactory<TContext>(Type type);
 }
 

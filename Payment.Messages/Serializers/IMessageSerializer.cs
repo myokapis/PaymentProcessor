@@ -4,6 +4,7 @@ namespace Payment.Messages.Serializers
 {
     public interface IMessageSerializer
     {
-        void SerializeMessage(IAccessibleMessage message, StringBuilder b, bool isMasked = false);
+        string SerializeMessage(IAccessibleMessage? message, bool isMasked = false);
+        void SerializeMessage(IAccessibleMessage? message, StringBuilder builder, bool isMasked = false);
     }
 }
