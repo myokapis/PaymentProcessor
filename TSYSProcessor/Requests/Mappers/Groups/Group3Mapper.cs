@@ -11,7 +11,7 @@ namespace TsysProcessor.Requests.Mappers.Groups
 {
     public class Group3Mapper : ParentMapper<TsysTransactionContext, Group3>
     {
-        public Group3Mapper(MapperFactory<TsysTransactionContext> mapperFactory, IMessageSerializer messageSerializer) : base(mapperFactory, messageSerializer)
+        public Group3Mapper(MapperFactory<TsysTransactionContext> mapperFactory, IStringMessageSerializer messageSerializer) : base(mapperFactory, messageSerializer)
         { }
 
         public override IAccessibleMessage Map(TsysTransactionContext transactionContext)

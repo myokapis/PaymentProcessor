@@ -58,7 +58,8 @@ namespace PaymentProcessorUI
 
             services.AddScoped<TsysTransactionRunner>();
             services.AddScoped<TsysWorkflowContext>();
-            services.AddScoped<IMessageSerializer, StringSerializer>();
+            services.AddScoped<IMessageSerializer, StringMessageSerializer>();
+            services.AddScoped<IStringMessageSerializer, StringMessageSerializer>();
             services.AddScoped<IBuilder<ActionContext>, ActionContextBuilder>();
             services.AddScoped<IFormatter, Formatter>();
             services.AddChildClasses(typeof(IMapper), typeof(IWorkflowTask));

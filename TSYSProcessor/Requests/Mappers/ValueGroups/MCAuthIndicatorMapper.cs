@@ -9,7 +9,11 @@ namespace TsysProcessor.Requests.Mappers.ValueGroups
     {
         public override IAccessibleMessage Map(TsysTransactionContext transactionContext)
         {
-            return new MCAuthIndicator();
+            // TODO: set the real values
+            return new MCAuthIndicator()
+            {
+                AuthIndicator = 'Z'
+            };
         }
     }
 }

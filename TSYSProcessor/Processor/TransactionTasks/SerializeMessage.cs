@@ -1,5 +1,4 @@
-﻿using System.Text;
-using Payment.Messages.Serializers;
+﻿using Payment.Messages.Serializers;
 using TsysProcessor.Processor.TransactionTasks;
 using TsysProcessor.Workflow.Context;
 namespace TsysProcessor.Processor.Transaction
@@ -15,10 +14,10 @@ namespace TsysProcessor.Processor.Transaction
 
         protected override bool RunActive()
         {
-            if (WorkflowContext.RequestMessage == null) throw new ArgumentNullException("RequestMessage is required.");
-            var builder = new StringBuilder();
-            serializer.SerializeMessage(WorkflowContext.RequestMessage, builder);
-            WorkflowContext.SerializedRequest = builder.ToString();
+            if (WorkflowContext.RequestMessage == null)
+                throw new ArgumentNullException("RequestMessage is required.");
+
+            WorkflowContext.SerializedRequest = serializer.SerializeMessage(WorkflowContext.RequestMessage);
             return true;
         }
     }

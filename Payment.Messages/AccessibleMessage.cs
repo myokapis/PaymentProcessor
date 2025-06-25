@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
+using System.Text.Json.Serialization;
 using Payment.Messages.Attributes.Format;
 using Payment.Messages.Attributes.Serialization;
 
@@ -25,9 +26,11 @@ namespace Payment.Messages
         /// <summary>
         /// Count of accessible property fields on the data object
         /// </summary>
+        [JsonIgnore]
         [NotMapped]
         public int FieldCount => fieldDefinitions.Value.Length;
 
+        [JsonIgnore]
         [NotMapped]
         public IEnumerable<FieldDefinition> FieldDefinitions
         {

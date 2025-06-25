@@ -13,7 +13,7 @@ namespace TsysProcessor.Requests.Mappers
 {
     public class SaleMapper : ParentMapper<TsysTransactionContext, SaleMessage>
     {
-        public SaleMapper(MapperFactory<TsysTransactionContext> mapperFactory, IMessageSerializer messageSerializer) : base(mapperFactory, messageSerializer)
+        public SaleMapper(MapperFactory<TsysTransactionContext> mapperFactory, IStringMessageSerializer messageSerializer) : base(mapperFactory, messageSerializer)
         {}
 
         public override IAccessibleMessage Map(TsysTransactionContext transactionContext)

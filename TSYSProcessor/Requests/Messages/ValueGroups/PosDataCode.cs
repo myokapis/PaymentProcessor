@@ -5,7 +5,7 @@ namespace TsysProcessor.Requests.Messages.ValueGroups
     public class PosDataCode : AccessibleMessage<PosDataCode>
     {
         public string GroupName { get; } = "027";
-        public char TerminalCardDataInputCapability { get; set; }
+        public char? TerminalCardDataInputCapability { get; set; }
         public char TerminalCardholderAuthenticationCapability { get; set; } = '0';
         public char TerminalCardCaptureCapability { get; set; } = '0';
         public char TerminalOperatingEnvironment { get; set; } = 'P';

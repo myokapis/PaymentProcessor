@@ -12,6 +12,5 @@ namespace TsysProcessor.Workflow.Context
         public string? SerializedRequest { get; set; }
         public TsysTransaction? Transaction { get; set; }
         public TsysTransactionContext? TransactionContext { get; set; }
-
     }
 }
