@@ -2,52 +2,62 @@
 
 namespace Payment.Workflow
 {
-    public class WorkflowTask : IWorkflowTask
+    public abstract class WorkflowTask : IWorkflowTask
     {
+        protected readonly IWorkflowContext workflowContext;
 
         public WorkflowTask(IWorkflowContext workflowContext)
         {
-            WorkflowContext = workflowContext;
+            this.workflowContext = workflowContext;
         }
 
-        public IWorkflowContext WorkflowContext { get; init; }
+        //public IWorkflowContext WorkflowContext { get; init; }
 
         public bool Run()
         {
-            if (WorkflowContext.WorkflowState)
+            if (workflowContext.WorkflowState)
             {
                 return RunActive();
             }
             else return RunErrored();
         }
 
-        public async Task<bool> RunAsync()
-        {
-            if (WorkflowContext.WorkflowState)
-            {
-                return await RunActiveAsync();
-            }
-            else return await RunErroredAsync();
-        }
+        //public async Task<bool> RunAsync()
+        //{
+        //    if (WorkflowContext.WorkflowState)
+        //    {
+        //        return await RunActiveAsync();
+        //    }
+        //    else return await RunErroredAsync();
+        //}
 
-        protected virtual bool RunActive()
-        {
-            return true;
-        }
+        protected abstract bool RunActive();
+        //{
+        //    return true;
+        //}
 
-        protected virtual async Task<bool> RunActiveAsync()
-        {
-            return await Task.FromResult(true);
-        }
+        //protected abstract Task<bool> RunActiveAsync();
+        //{
+        //    return await Task.FromResult(true);
+        //}
 
         protected virtual bool RunErrored()
         {
             return false;
         }
 
-        protected virtual async Task<bool> RunErroredAsync()
+    //    protected virtual async Task<bool> RunErroredAsync()
+    //    {
+    //        return await Task.FromResult(false);
+    //}
+    }
+
+    public abstract class WorkflowTask<T> : WorkflowTask where T : IWorkflowContext
+    {
+        protected WorkflowTask(T workflowContext) : base(workflowContext)
         {
-            return await Task.FromResult(false);
         }
+
+        public T WorkflowContext => (T)workflowContext;
     }
 }

@@ -94,6 +94,16 @@ namespace Tests.Payment.Messages.Serializers.Formatters
         }
 
         [Fact]
+        public void FormatValue_Object_NullString()
+        {
+            var formatter = new Formatter();
+            IFormatAttribute? formatAttribute = null;
+            object value = new TestObjectNullString();
+            var formattedValue = formatter.FormatValue(value, formatAttribute);
+            formattedValue.Should().Be("");
+        }
+
+        [Fact]
         public void FormatValue_String()
         {
             var formatter = new Formatter();
@@ -156,9 +166,17 @@ namespace Tests.Payment.Messages.Serializers.Formatters
 
         private class TestObject
         {
-            public override string ToString()
+            public override string? ToString()
             {
                 return "TestObjects are quiet.";
+            }
+        }
+
+        private class TestObjectNullString
+        {
+            public override string? ToString()
+            {
+                return null;
             }
         }
     }

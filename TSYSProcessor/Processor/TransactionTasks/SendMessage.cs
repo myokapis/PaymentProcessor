@@ -3,7 +3,7 @@ using TsysProcessor.Workflow.Context;
 
 namespace TsysProcessor.Processor.TransactionSteps
 {
-    public class SendMessage : TsysTask
+    public class SendMessage : TsysTaskAsync
     {
         public SendMessage(TsysWorkflowContext workflowContext) : base(workflowContext)
         { }

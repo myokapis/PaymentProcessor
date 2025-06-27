@@ -2,7 +2,7 @@
 
 namespace Payment.Workflow
 {
-    public class WorkflowContext : IWorkflowContext
+    public abstract class WorkflowContext : IWorkflowContext
 
     {
         public WorkflowContext()

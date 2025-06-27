@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TsysProcessor.Processor;
+using TsysProcessor.Transaction.Context;
 using TsysProcessor.Transaction.Model;
 
 namespace PaymentProcessorUI.Controllers
@@ -20,7 +21,7 @@ namespace PaymentProcessorUI.Controllers
         }
 
         [HttpPost("/cardpayment/payment/")]
-        public async Task<IActionResult> Payment([FromBody] TsysTransaction transaction)
+        public async Task<IActionResult> Payment([FromBody] TsysTransaction tsysTransaction)
         {
             if (!ModelState.IsValid)
             {
@@ -30,7 +31,8 @@ namespace PaymentProcessorUI.Controllers
                 return BadRequest("Transaction was improperly formatted.");
             }
 
-            await workflowRunner.RunAsync(transaction);
+            workflowRunner.WorkflowContext.Transaction = tsysTransaction;
+            await workflowRunner.RunAsync();
             var request = workflowRunner.WorkflowContext.SerializedRequest;
 
             return Ok(request);

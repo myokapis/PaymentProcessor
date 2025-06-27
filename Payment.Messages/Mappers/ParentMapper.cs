@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Payment.Messages.Mappers
 {
-    public class ParentMapper<TContext, TMessage> : Mapper<TContext, TMessage>
+    public abstract class ParentMapper<TContext, TMessage> : Mapper<TContext, TMessage>
         where TMessage : IAccessibleMessage
     {
         protected MapperFactory<TContext> mapperFactory;
