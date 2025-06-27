@@ -2,7 +2,6 @@
 {
     public interface IWorkflowRunner
     {
-        bool Run();
         Task<bool> RunAsync();
     }
 }

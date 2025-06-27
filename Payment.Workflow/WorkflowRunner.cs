@@ -3,55 +3,39 @@ using Payment.Workflow.Interfaces;
 
 namespace Payment.Workflow
 {
-    // TODO: make this abstract and implement a payment processor specific version in that project
-    public class WorkflowRunner : IWorkflowRunner
+    public abstract class WorkflowRunner : IWorkflowRunner
     {
-        
-        private readonly WorkflowTaskFactory workflowTaskFactory;
+        protected readonly IWorkflowContext workflowContext;
+        protected readonly WorkflowTaskFactory workflowTaskFactory;
 
         public WorkflowRunner(WorkflowTaskFactory workflowTaskFactory, IWorkflowContext workflowContext)
         {
             
             this.workflowTaskFactory = workflowTaskFactory;
-            WorkflowContext = workflowContext;
-        }
-
-        public IWorkflowContext WorkflowContext { get; init; }
-
-        public virtual bool Run()
-        {
-            WorkflowTasks();
-            return WorkflowContext.WorkflowState;
+            this.workflowContext = workflowContext;
+            workflowContext.WorkflowState = true;
         }
 
         public async virtual Task<bool> RunAsync()
         {
-            await WorkflowTasksAsync();
-            return WorkflowContext.WorkflowState;
+            await RunWorkflowTasks();
+            return workflowContext.WorkflowState;
         }
 
-        protected virtual void WorkflowTasks()
-        {
-        }
+        protected abstract Task RunWorkflowTasks();
 
-        protected virtual async Task WorkflowTasksAsync()
-        {
-        }
-
-        protected void HandleException(Exception exception)
-        {
-            WorkflowContext.WorkflowState = false;
-        }
-
+        protected abstract void HandleException(Exception exception);
+ 
         protected void RunWorkflowTask<T>() where T : IWorkflowTask
         {
             try
             {
                 var workflowTask = workflowTaskFactory(typeof(T));
-                WorkflowContext.WorkflowState = workflowTask.Run();
+                workflowContext.WorkflowState = workflowTask.Run();
             }
             catch(Exception e)
             {
+                workflowContext.WorkflowState = false;
                 HandleException(e);
             }
         }
@@ -62,12 +46,22 @@ namespace Payment.Workflow
             {
                 var workflowTask = workflowTaskFactory(typeof(T));
                 var result = await workflowTask.RunAsync();
-                WorkflowContext.WorkflowState = result;
+                workflowContext.WorkflowState = result;
             }
             catch (Exception e)
             {
+                workflowContext.WorkflowState = false;
                 HandleException(e);
             }
         }
+    }
+
+    public abstract class WorkflowRunner<T> : WorkflowRunner where T : IWorkflowContext
+    {
+        protected WorkflowRunner(WorkflowTaskFactory workflowTaskFactory, IWorkflowContext workflowContext) : base(workflowTaskFactory, workflowContext)
+        {
+        }
+
+        public T WorkflowContext => (T)workflowContext;
     }
 }

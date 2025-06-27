@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Payment.Messages;
 using Payment.Messages.Mappers;
 using Tests.Payment.Messages.Helpers;
 
@@ -44,6 +45,11 @@ namespace Tests.Payment.Messages.Mappers
         }
 
         private class TestMapper : Mapper<TestMessageContext, TestParentMessage>
-        { }
+        {
+            public override IAccessibleMessage Map(TestMessageContext messageContext)
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }

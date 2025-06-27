@@ -6,10 +6,7 @@
         public Mapper()
         { }
 
-        public virtual IAccessibleMessage Map(TContext messageContext)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract IAccessibleMessage Map(TContext messageContext);
 
         public virtual IAccessibleMessage SetFields(IAccessibleMessage message, Dictionary<string, object?> fieldValues)
         {
