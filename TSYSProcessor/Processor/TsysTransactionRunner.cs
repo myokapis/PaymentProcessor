@@ -14,12 +14,6 @@ namespace TsysProcessor.Processor
         {
         }
 
-        //public async Task<bool> RunAsync(TsysTransactionContext tsysTransactionContext)
-        //{
-        //    WorkflowContext.TransactionContext = tsysTransactionContext;
-        //    return await RunAsync();
-        //}
-
         protected override void HandleException(Exception exception)
         {
             // TODO: log error here

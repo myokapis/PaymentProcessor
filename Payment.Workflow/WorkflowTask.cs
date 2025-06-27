@@ -22,15 +22,6 @@ namespace Payment.Workflow
             else return RunErrored();
         }
 
-        //public async Task<bool> RunAsync()
-        //{
-        //    if (WorkflowContext.WorkflowState)
-        //    {
-        //        return await RunActiveAsync();
-        //    }
-        //    else return await RunErroredAsync();
-        //}
-
         protected abstract bool RunActive();
         //{
         //    return true;
@@ -45,11 +36,6 @@ namespace Payment.Workflow
         {
             return false;
         }
-
-    //    protected virtual async Task<bool> RunErroredAsync()
-    //    {
-    //        return await Task.FromResult(false);
-    //}
     }
 
     public abstract class WorkflowTask<T> : WorkflowTask where T : IWorkflowContext
