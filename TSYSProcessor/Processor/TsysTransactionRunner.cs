@@ -2,7 +2,7 @@
 using Payment.Workflow.Factories.Delegates;
 using TsysProcessor.Processor.Transaction;
 using TsysProcessor.Processor.TransactionSteps;
-using TsysProcessor.Transaction.Context;
+using TsysProcessor.Processor.TransactionTasks;
 using TsysProcessor.Workflow.Context;
 
 namespace TsysProcessor.Processor
@@ -23,11 +23,17 @@ namespace TsysProcessor.Processor
 
         protected override async Task RunWorkflowTasks()
         {
-            // TODO: add steps here
-            RunWorkflowTask<BuildTransactionContext>();
+            await RunWorkflowTaskAsync<AcquireLock>();
+            await RunWorkflowTaskAsync<BuildTransactionContext>();
             RunWorkflowTask<BuildMessage>();
             RunWorkflowTask<SerializeMessage>();
+            await RunWorkflowTaskAsync<SaveMessage>();
             await RunWorkflowTaskAsync<SendMessage>();
+            RunWorkflowTask<ParseResponse>();
+            RunWorkflowTask<BuildResponseEnvelope>();
+            await RunWorkflowTaskAsync<SaveResponse>();
+            await RunWorkflowTaskAsync<EnqueueTransactionResponse>();
+            await RunWorkflowTaskAsync<ReleaseLock>();
         }
     }
 }

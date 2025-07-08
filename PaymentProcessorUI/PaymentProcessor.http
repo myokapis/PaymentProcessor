@@ -56,6 +56,7 @@ Content-Type: application/json
     "action": "SALE",
     "product_context": "CARD_PRESENT",
     "metadata": {
+      "cardAuthentication": false,
       "userEmail": "someone@example.com",
       "platform": "virtual_terminal",
       "user_agent": "djskfjadlsf",
@@ -68,7 +69,10 @@ Content-Type: application/json
           "name": "Quick Item",
           "price": 3,
           "quantity": 1
-        }]
+        }],
+      "customer": {
+        "save_card": true
+      }
     }
   },
   "expires_at": "2025-05-06"

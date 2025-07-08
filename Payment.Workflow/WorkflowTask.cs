@@ -11,8 +11,6 @@ namespace Payment.Workflow
             this.workflowContext = workflowContext;
         }
 
-        //public IWorkflowContext WorkflowContext { get; init; }
-
         public bool Run()
         {
             if (workflowContext.WorkflowState)
@@ -23,14 +21,6 @@ namespace Payment.Workflow
         }
 
         protected abstract bool RunActive();
-        //{
-        //    return true;
-        //}
-
-        //protected abstract Task<bool> RunActiveAsync();
-        //{
-        //    return await Task.FromResult(true);
-        //}
 
         protected virtual bool RunErrored()
         {

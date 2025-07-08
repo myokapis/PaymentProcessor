@@ -26,6 +26,7 @@ namespace Payment.Workflow
 
         protected abstract void HandleException(Exception exception);
  
+        // TODO: implement some kind of logging and tracing
         protected void RunWorkflowTask<T>() where T : IWorkflowTask
         {
             try
@@ -40,6 +41,7 @@ namespace Payment.Workflow
             }
         }
 
+        // TODO: implement some kind of logging and tracing
         protected async Task RunWorkflowTaskAsync<T>() where T : IWorkflowTask
         {
             try
