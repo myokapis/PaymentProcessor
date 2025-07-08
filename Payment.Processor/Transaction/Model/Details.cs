@@ -5,6 +5,7 @@ namespace Payment.Processor.Transaction.Model
 {
     public class Details
     {
+        // TODO: augment this expression with additional valid values
         [RegularExpression(@"^(AUTH|PRE_AUTH|RETURN|SALE|VOID)$")]
         public required string Action { get; init; }
 
@@ -23,7 +24,7 @@ namespace Payment.Processor.Transaction.Model
         public bool? Fallback { get; init; }
         public int? FoodAmount { get; init; }
         public Guid Id { get; set; }
-        public Dictionary<string, object>? Metadata { get; init; }
+        public Metadata? Metadata { get; init; }
         public object? Moto { get; init; }
         public Guid? OriginalId { get; init; }
         public object? ProcessorOptions { get; init; }

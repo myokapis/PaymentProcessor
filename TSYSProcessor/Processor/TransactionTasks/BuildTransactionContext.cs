@@ -7,52 +7,50 @@ using TsysProcessor.Processor.TransactionTasks;
 
 namespace TsysProcessor.Processor.TransactionSteps
 {
-    class BuildTransactionContext : TsysTask
+    class BuildTransactionContext : TsysTaskAsync
     {
         private readonly IBuilder<ActionContext> actionContextBuilder;
+        private readonly IBuilderAsync<CardContext> cardContextBuilder;
+        private readonly IBuilder<CardOnFileContext> cardOnFileContextBuilder;
+        private readonly IBuilder<TsysEnvelope> envelopeBuilder;
+        private readonly IBuilder<ReaderContext> readerContextBuilder;
 
-        public BuildTransactionContext(TsysWorkflowContext workflowContext, IBuilder<ActionContext> actionContextBuilder) : base(workflowContext)
+        public BuildTransactionContext(TsysWorkflowContext workflowContext,
+            IBuilder<ActionContext> actionContextBuilder,
+            IBuilderAsync<CardContext> cardContextBuilder,
+            IBuilder<CardOnFileContext> cardOnFileContextBuilder,
+            IBuilder<TsysEnvelope> envelopeBuilder,
+            IBuilder<ReaderContext> readerContextBuilder) : base(workflowContext)
         {
             this.actionContextBuilder = actionContextBuilder;
+            this.cardContextBuilder = cardContextBuilder;
+            this.cardOnFileContextBuilder = cardOnFileContextBuilder;
+            this.envelopeBuilder = envelopeBuilder;
+            this.readerContextBuilder = readerContextBuilder;
         }
 
-        protected override bool RunActive()
+        protected override async Task<bool> RunActiveAsync()
         {
-            if (WorkflowContext.Transaction is not TsysTransaction transaction) throw new ArgumentNullException("Transaction");
+            if (WorkflowContext.Transaction is not TsysTransaction transaction)
+                throw new ArgumentNullException("Transaction");
+
+            var actionContext = actionContextBuilder.Build(transaction);
 
             var transactionContext = new TsysTransactionContext()
             {
-                // TODO: finish defining the context and setting properties
-                ActionContext = actionContextBuilder.Build(transaction),
-                // TODO: call the card decryption utility
-                Card = BuildCard(transaction.Details.EncryptedCardData),
+                ActionContext = actionContext,
+                CardContext = await cardContextBuilder.BuildAsync(transaction),
+                CardOnFileContext = cardOnFileContextBuilder.Build(transaction, actionContext),
                 Details = transaction.Details,
-                // TODO: call an envelope builder or utility
-                Envelope = BuildEnvelope(),
+                Envelope = envelopeBuilder.Build(transaction),
                 Merchant = transaction.Merchant,
                 ProcessorAttributes = transaction.ProcessorAttributes,
-                // TODO: should this be a reader context with booleans and other helper methods?
-                Reader = transaction.Details.Reader
+                ReaderContext = readerContextBuilder.Build(transaction)
             };
 
             WorkflowContext.TransactionContext = transactionContext;
 
             return true;
-        }
-
-        // TODO: inject the builders and utilities instead of newing these up
-        protected Card BuildCard(string EncryptedCardData)
-        {
-            return new Card()
-            { 
-                DataSource = "",
-                TransactionMethod = ""
-            };
-        }
-
-        protected TsysEnvelope BuildEnvelope()
-        {
-            return new TsysEnvelope();
         }
     }
 }

@@ -6,6 +6,7 @@ namespace TsysProcessor.Extensions
     public static class ServicesExtensions
     {
         // TODO: rename this method
+        //       Also find a way to move this up to the library
         public static IServiceCollection AddChildClasses(this IServiceCollection services, params Type[] baseTypes)
         {
             var assembly = Assembly.GetExecutingAssembly();
