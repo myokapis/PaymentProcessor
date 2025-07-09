@@ -26,7 +26,7 @@ namespace Payment.Processor.Builders
                 InstallmentPayment = paymentPlanType == PaymentPlanType.Installment,
                 MerchantInitiated = platform == Platform.ScheduledPayment,
                 MultipartPayment = paymentPlanType.OneOf(PaymentPlanType.Installment, PaymentPlanType.Recurring),
-                OneTimePayment = paymentPlanType == PaymentPlanType.OneTime,
+                OneTimePayment = paymentPlanType == PaymentPlanType.Single,
                 PaymentPlanId = metadata?.PaymentPlan?.PaymentPlanId,
                 PaymentPlanType = paymentPlanType,
                 Platform = metadata?.Platform,
