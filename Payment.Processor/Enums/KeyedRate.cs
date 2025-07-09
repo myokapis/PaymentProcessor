@@ -3,7 +3,7 @@
     public enum KeyedRate
     {
         Any,
-        Retail,
-        MOTO
+        MOTO,
+        Retail
     }
 }

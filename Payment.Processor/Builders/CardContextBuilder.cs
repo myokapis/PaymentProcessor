@@ -18,6 +18,7 @@ namespace Payment.Processor.Builders
         public async Task<CardContext> BuildAsync(ITransactionModel transaction)
         {
             var encryptedCardData = transaction.Details.EncryptedCardData;
+            // TODO: what should we do for unencrypted readers?
             var card = await decryptionService.DecryptCardData(encryptedCardData);
             var brand = CardBrand.Unknown.Parse(card?.Brand);
             var dataSource = DataSource.Unknown.Parse(card?.DataSource);
